@@ -1,9 +1,10 @@
 import { Button, Stack } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import BudgetCard from "./components/BudgetCard";
+import UncategorizedBudgetCard from "./components/UncategorizedBudgetCard";
 import AddBudgetModal from "./components/AddBudgetModal";
 import { useState } from "react";
-import { BudgetProvider, useBudgets } from "./contexts/BudgetsContexts";
+import { useBudgets } from "./contexts/BudgetsContexts";
 import AddExpemseModal from "./components/AddExpenseModal";
 
 function App() {
@@ -77,7 +78,8 @@ function App() {
               />
             );
           })}
-          <BudgetCard name="test" ammount={810} max={100}></BudgetCard>
+
+          <UncategorizedBudgetCard />
         </div>
       </Container>
       <AddBudgetModal
