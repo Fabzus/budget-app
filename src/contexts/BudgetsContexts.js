@@ -17,7 +17,10 @@ export const BudgetProvider = ({ children }) => {
   }
   function addExpense(description, ammount, budgetID) {
     setExpenses((prevExpenses) => {
-      return [...prevExpenses, { id: uuidV4, description, ammount, budgetID }];
+      return [
+        ...prevExpenses,
+        { id: uuidV4(), description, ammount, budgetID },
+      ];
     });
   }
   function addBudget(name, max) {
@@ -25,7 +28,7 @@ export const BudgetProvider = ({ children }) => {
       if (prevBudgets.find((budget) => budget.name === name)) {
         return prevBudgets;
       }
-      return [...prevBudgets, { id: uuidV4, name, max }];
+      return [...prevBudgets, { id: uuidV4(), name, max }];
     });
   }
   function deleteBudget({ id }) {
