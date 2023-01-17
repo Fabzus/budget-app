@@ -12,6 +12,7 @@ export default function AddBudgetModal({ show, handleClose }) {
       name: nameRef.current.value,
       max: parseFloat(maxRef.current.value),
     });
+    handleClose();
   }
 
   return (
