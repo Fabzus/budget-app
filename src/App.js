@@ -1,4 +1,11 @@
 import { Button, Stack } from "react-bootstrap";
+import {
+  MDBFooter,
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 import Container from "react-bootstrap/Container";
 import BudgetCard from "./components/BudgetCard";
 import UncategorizedBudgetCard from "./components/UncategorizedBudgetCard";
@@ -8,12 +15,15 @@ import {
   UNCATEGORIZED_BUDGET_ID,
   useBudgets,
 } from "./contexts/BudgetsContexts";
-import AddExpemseModal from "./components/AddExpenseModal";
+import ViewExpensesModal from "./components/ViewExpensesModal";
 import TotalBudgetCard from "./components/TotalBudgetCard";
+import AddExpemseModal from "./components/AddExpenseModal";
 
 function App() {
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
   const [showAddExpensesModal, setShowAddExpensesModal] = useState(false);
+  const [viewExpensesModalBudgetId, setViewExpensesModalModalBudgetId] =
+    useState(false);
   const [addExpensesModalBudgetId, setAddExpensesModalBudgetId] = useState();
 
   function openAddExpenseModal(budgetId) {
@@ -60,18 +70,20 @@ function App() {
               (total, expense) => total + expense.description.ammount,
               0
             );
-            console.log(
-              expenses
-                .filter(
-                  (expenses) =>
-                    expenses.description.budgetId ===
-                    "d2cd7c71-3974-4cd4-8c7a-bc7e8d192046"
-                )
-                .reduce(
-                  (total, expense) => total + expense.description.ammount,
-                  0
-                )
-            );
+            // console.log(
+            //   expenses
+            //     .filter(
+            //       (expenses) =>
+            //         expenses.description.budgetId ===
+            //         "d2cd7c71-3974-4cd4-8c7a-bc7e8d192046"
+            //     )
+            //     .reduce(
+            //       (total, expense) => total + expense.description.ammount,
+            //       0
+            //     )
+            // );
+
+            console.log(viewExpensesModalBudgetId);
             return (
               <BudgetCard
                 key={budget.id}
@@ -79,6 +91,9 @@ function App() {
                 ammount={ammount}
                 max={budget.name.max}
                 openAddExpenseClick={() => openAddExpenseModal(budget.id)}
+                openViewExpensesClick={() =>
+                  setViewExpensesModalModalBudgetId(budget.id)
+                }
               />
             );
           })}
@@ -86,6 +101,9 @@ function App() {
           <UncategorizedBudgetCard
             openAddExpenseClick={() =>
               openAddExpenseModal(UNCATEGORIZED_BUDGET_ID)
+            }
+            openViewExpensesClick={() =>
+              setViewExpensesModalModalBudgetId(UNCATEGORIZED_BUDGET_ID)
             }
           />
           <TotalBudgetCard />
@@ -103,6 +121,12 @@ function App() {
           setShowAddExpensesModal(false);
         }}
         defaultBudgetId={addExpensesModalBudgetId}
+      />
+      <ViewExpensesModal
+        budgetId={viewExpensesModalBudgetId}
+        handleClose={() => {
+          setViewExpensesModalModalBudgetId(false);
+        }}
       />
     </>
   );
